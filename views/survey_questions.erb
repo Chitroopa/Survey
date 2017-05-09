@@ -1,9 +1,9 @@
 
-<h3>Add questions for survey <%= @survey.name() %></h3>
+<h3>Add questions for survey: <i><%= @survey.name() %></i></h3>
 
 <form action="/survey_designer/question/<%= @survey.id() %>" method="post">
   <label for="question">Enter question for the survey:</label>
-  <input id="question" name="question" type="text" required><br>
+  <input id="question" name="question" type="text" ><br>
   <label for="question_type">Enter question type:</label>
   <select id="question_type" name="question_type">
     <option value="radio">Radio</option>

@@ -23,9 +23,15 @@ end
 
 post('/survey_designer/new') do
   name = params.fetch('name')
-  new_survey = Survey.create({:name => name})
-  @surveys = Survey.all()
-  erb(:survey_designer)
+  @new_survey = Survey.new({:name => name})
+
+  if @new_survey.save()
+    @surveys = Survey.all()
+    erb(:survey_designer)
+  else
+    @errors = @new_survey
+    erb(:errors)
+  end
 end
 
 get('/survey_designer/:id') do
@@ -41,16 +47,19 @@ post('/survey_designer/question/:id') do
   question = params.fetch('question')
   question_type = params.fetch('question_type')
   @survey.questions.new({:question => question, :question_type => question_type})
-  @survey.save()
-  @questions = Question.all()
-  erb(:survey_questions)
+  if @survey.save()
+    @questions = Question.all()
+    erb(:survey_questions)
+  else
+    @errors = @survey
+    erb(:errors)
+  end
 end
 
 get ('/survey_designer/answer/:id') do
   id = params.fetch('id')
   @question = Question.find(id)
   @answers = Answer.all()
-# binding.pry
   erb(:question_answers)
 end
 
@@ -68,9 +77,13 @@ post ('/survey_designer/answer/:id') do
   @question = Question.find(id)
   answer = params.fetch('answer')
   @question.answers.new({:answer =>answer})
-  @question.save()
-  @answers = Answer.all()
-  erb(:question_answers)
+  if @question.save()
+    @answers = Answer.all()
+    erb(:question_answers)
+  else
+    @errors = @question
+    erb(:errors)
+  end
 end
 
 post ('/survey_designer/question/rename/:id') do
@@ -86,4 +99,15 @@ patch ('/survey_designer/question/rename/:id') do
   @question = Question.find(id)
   @question.update({:question => question})
   erb(:question_answers)
+end
+
+get('/surveys/view') do
+  @surveys = Survey.all()
+  erb(:survey_list)
+end
+
+get('/survey/view/:id') do
+  id = params.fetch('id')
+  @survey = Survey.find(id)
+  erb(:take_survey)
 end

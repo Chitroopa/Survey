@@ -1,11 +1,11 @@
-ENV['RACK_ENV'] = 'test'
-
 require('rspec')
 require('pg')
 require('sinatra/activerecord')
 require('survey')
 require('question')
 require('answer')
+
+ENV['RACK_ENV'] = 'test'
 
 RSpec.configure do |config|
   config.before(:each) do

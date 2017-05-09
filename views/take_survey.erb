@@ -1,0 +1,19 @@
+<form action="/survey/view/<%= @survey.id() %>" method="post">
+  <h1><%= @survey.name %></h1>
+  <h3>Answer the following questions</h3>
+  <% if @survey.questions.any?() %>
+      <% @survey.questions.each() do |question| %>
+        <h4><%= question.question() %></h4>
+          <% if question.answers.any?() %>
+            <% question.answers.each() do |answer| %>
+              <h5><%= answer.answer() %></h5>
+            <% end %>
+          <% else %>
+            <h5>No options for this question</h5>
+          <%end %>
+      <% end %>
+  <% else %>
+    <h4>No questions yet</h4>
+  <% end %>
+  <button type="submit" name="button">Submit</button>
+</form>

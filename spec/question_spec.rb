@@ -1,6 +1,11 @@
 require('spec_helper')
 
 describe(Question) do
+  it("makes sure something is entered in the question field") do
+    question = Question.new({:question => ""})
+    expect(question.save()).to(eq(false))
+  end
+
   describe("#answers") do
     it("tells what answers are in the question") do
       test_question = Question.create({:question => "What color do you want your car?", :question_type => "radio"})

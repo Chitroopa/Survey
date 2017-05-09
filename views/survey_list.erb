@@ -1,0 +1,10 @@
+<h4>Here are the list of surveys</h4>
+<% if @surveys.any?() %>
+  <ul>
+    <% @surveys.each() do |survey| %>
+      <li><a href="/survey/view/<%= survey.id() %>"><%= survey.name() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No surveys yet</h4>
+<% end %>
