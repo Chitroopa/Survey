@@ -1,0 +1,41 @@
+<h3>Add possible answers for the question <%= @question.question() %></h3>
+<h4>This answer will be displayed as: <%= @question.question_type() %></h4>
+
+
+<form action="/survey_designer/answer/<%= @question.id() %>" method="post">
+  <label for="answer">Enter an answer to the question:</label>
+  <input id="answer" name="answer" type="text" required><br>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+
+<h4>Here are the list of possible answers:</h4>
+<% if @question.answers.any?() %>
+  <ul>
+    <% @question.answers.each() do |answer| %>
+      <li><%= answer.answer() %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No answers yet</h4>
+<% end %>
+
+
+<h3>Edit the question <%= @question.question() %></h3>
+<div class="row">
+  <br>
+  <div class="col-md-2">
+    <a href="/survey_designer/<%= @question.survey().id() %>" class = "btn btn-success active" role = "button">Go back</a>
+  </div>
+  <div class="col-md-2">
+    <form action="/survey_designer/question/rename/<%= @question.id() %>" method="post">
+      <button class = "btn btn-warning active" type="submit">Rename question</button>
+    </form>
+  </div>
+  <div class="col-md-2">
+    <form class="/survey_designer/answer/<%= @question.id() %>" method="post">
+      <input type="hidden" name="_method" value="delete">
+      <button class = "btn btn-danger active" type="submit">Delete question</button>
+    </form>
+  </div>
+</div>

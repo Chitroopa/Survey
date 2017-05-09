@@ -1,0 +1,33 @@
+
+<h3>Add questions for survey <%= @survey.name() %></h3>
+
+<form action="/survey_designer/question/<%= @survey.id() %>" method="post">
+  <label for="question">Enter question for the survey:</label>
+  <input id="question" name="question" type="text" required><br>
+  <label for="question_type">Enter question type:</label>
+  <select id="question_type" name="question_type">
+    <option value="radio">Radio</option>
+    <option value="text">Text</option>
+    <option value="select">Select list</option>
+    <option value="checkbox">Check box</option>
+  </select><br>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<h4>Here are the list of questions</h4>
+<% if @survey.questions().any?() %>
+  <ul>
+    <% @survey.questions().each() do |question| %>
+      <li><a href="/survey_designer/answer/<%= question.id() %>"><%= question.question() %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <h4>No questions yet</h4>
+<% end %>
+
+<div class="row">
+  <br>
+  <div class="col-md-2">
+    <a href="/survey_designer" class = "btn btn-success active" role = "button">Go back</a>
+  </div>
+</div>
